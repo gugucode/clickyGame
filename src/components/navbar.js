@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 
 class Navbar extends Component {
+    constructor(props){
+        super(props);
+    }
 
+    // CSS styles 
     navStyle = {
         background:'teal', 
         position: 'fixed',
@@ -32,8 +36,8 @@ class Navbar extends Component {
                         </div>
 
                         <div className="col-12 col-md-3 align-self-center" style={this.fontStyle}>
-                            <p className="score text-right">Score: 0</p>
-                            <p className="score text-right">Top Score: 0</p>
+                            <p className="score text-right">Score: {this.props.score}</p>
+                            <p className="score text-right">Top Score: {this.props.topScore}</p>
                         </div>
                 </div>
             </div>
