@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import DisplayCharacters from './components/main';
+import Main from './components/main';
 import './App.css';
 
 class App extends Component {
   render() {
     return (
-        <DisplayCharacters />
+        <Main />
     );
   }
 }
