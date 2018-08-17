@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import gameInfo from './gameInfo'
 import Navbar from './navbar';
 import Jumbotron from './jumbotron';
+import RenderImgRow from './renderImgRow'
 import Footer from './footer';
 
 class DisplayCharacters extends Component {
@@ -10,21 +11,21 @@ class DisplayCharacters extends Component {
         super(props);
         this.state = {
             score: 0,
-            topScore: 0
+            topScore: 0,
+            hasClicked: []
         }
         this.handleClick = this.handleClick.bind(this);
     }
-    cardImg = {
-        height: '180px',
-        width: '13em'
-    };
 
     handleClick = (e) => {
-        if(e.target.isClick === "1"){
+        const name = e.target.name
+        console.log(name)
+        if(this.state.hasClicked.indexOf(name) !== -1){
             alert("You lost!");
 
             let scores = {
                 score: 0,
+                hasClicked: []
             }
             if(this.state.topScore < this.state.score){
                 scores.topScore = this.state.score
@@ -33,8 +34,11 @@ class DisplayCharacters extends Component {
             this.setState(scores);
             this.showImages();
         }else{
-            e.target.isClick = "1";
-            this.setState((prevState, props)=>({score: prevState.score + 1}))
+            // console.log(e.target.name)
+            this.setState((prevState)=>({
+                score: prevState.score + 1,
+                hasClicked: [...prevState.hasClicked, name]
+            }))
         }
     }
 
@@ -66,20 +70,7 @@ class DisplayCharacters extends Component {
             var img3 = gameInfo[i+2];
             var img4 = gameInfo[i+3];
             result.push(
-                <div key={i} className="row justify-content-md-center">
-                    <div key={img1.name} className="col-5 col-md-3 align-self-center" isClick="0" onClick={this.handleClick}>
-                            <img className="card-img-top img-thumbnail m-1" style={this.cardImg} src={img1.img} alt={img1.name} />                            
-                    </div>
-                    <div key={img2.name} className="col-5 col-md-3 align-self-center" isClick="0" onClick={this.handleClick}>
-                            <img className="card-img-top img-thumbnail m-1" style={this.cardImg} src={img2.img} alt={img1.name} />                            
-                    </div>
-                    <div key={img3.name} className="col-5 col-md-3 align-self-center" isClick="0" onClick={this.handleClick}>
-                            <img className="card-img-top img-thumbnail m-1" style={this.cardImg} src={img3.img} alt={img1.name} />                            
-                    </div> 
-                    <div key={img4.name} className="col-5 col-md-3 align-self-center" isClick="0" onClick={this.handleClick}>
-                            <img className="card-img-top img-thumbnail m-1" style={this.cardImg} src={img4.img} alt={img1.name} />                            
-                    </div>            
-                </div>
+                <RenderImgRow img={[img1,img2,img3,img4]} handleClick={this.handleClick}/>
             )
         }
         return result;
